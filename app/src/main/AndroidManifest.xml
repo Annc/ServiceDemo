@@ -20,6 +20,7 @@
                 <action android:name="SERVICE"></action>
             </intent-filter>
         </service>
+        <service android:name=".Myservice2"></service>
     </application>
 
 </manifest>

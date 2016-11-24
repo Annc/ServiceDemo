@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private Button mStart,mStop,mBind,mUnbind,mGetNum;
+    private Button mStart,mStop,mBind,mUnbind,mGetNum,mQiantai;
     private MyService.MyBinder mbinder;
-    private Intent intent;
+    private Intent intent,intent2;
 
     //connection对象，绑定服务时使用
     private ServiceConnection connection = new ServiceConnection() {
@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent();
         //设置服务入口
         intent.setClass(MainActivity.this, MyService.class);
+
+        /**
+         * 第二个服务，前台服务，直接用startservice方式启动，不使用binder
+         */
+        intent2 = new Intent();
+        intent2.setClass(MainActivity.this, Myservice2.class);
     }
     void init(){
         mStart = (Button)findViewById(R.id.start_service);
@@ -50,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
         mBind = (Button)findViewById(R.id.bind);
         mUnbind = (Button)findViewById(R.id.unbind_service);
         mGetNum = (Button)findViewById(R.id.getNum);
+        mQiantai = (Button)findViewById(R.id.qiantai_service);
 
         mStart.setOnClickListener(new btnListener());
         mStop.setOnClickListener(new btnListener());
         mUnbind.setOnClickListener(new btnListener());
         mBind.setOnClickListener(new btnListener());
         mGetNum.setOnClickListener(new btnListener());
+        mQiantai.setOnClickListener(new btnListener());
     }
     //按钮监听器
     class btnListener implements View.OnClickListener{
@@ -82,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.getNum:
                     //和服务通信,使用OnBind方法的返回值
                     Log.v("here",String.valueOf(mbinder.getNum()));
+                    break;
+                case R.id.qiantai_service:
+                    startService(intent2);
                     break;
                 default:
                     break;
